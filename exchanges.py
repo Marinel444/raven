@@ -48,7 +48,6 @@ def binance_get_p2p_scheme(asset='USDT', asset2='BTC', fiat='UAH', bank=None, li
     return text
 
 
-print(binance_get_p2p_scheme(asset2='bnb', fiat='uah', limit=10000))
 coins = {
     'btc': 1,
     'usdt': 2,
