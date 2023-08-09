@@ -38,10 +38,12 @@ def binance_get_p2p_scheme(asset='USDT', asset2='BTC', fiat='UAH', bank=None, li
     # спотовая цена монеты
     get_spot = binance_get_spot_price(arg1=asset, arg2=asset2)
     data = Decimal(data['data'][0]['adv']['price'])
+    data = data - (data * Decimal(0.001))
     get_spot = Decimal(get_spot['bids'][0][0])
     btc = ((100 / data) * get_spot)
-    btc = btc - (btc * Decimal(0.01))
+    btc = btc - (btc * Decimal(0.001))
     end_point = Decimal(end_point['data'][0]['adv']['price'])
+    end_point = end_point - (end_point * Decimal(0.001))
     btc = (((end_point * btc) / 100) - 1) * 100
     text = f"{fiat.upper()}-{asset2.upper()}-{asset.upper()}-{fiat.upper()}" \
            f"\nMаржа: {btc:.3f} %\nбанк: {bank[0]}\nМин.сумма: {limit}"
@@ -97,7 +99,7 @@ def huobi_get_p2p_scheme(bank='monobank', coin='usdt', coin2='btc', fiat='uah', 
     sell_coin = Decimal(sell_coin['data'][0]['price'])
     get_spot = Decimal(get_spot['data']['currentPrice'])
     btc = ((100 / buy_coin) * get_spot)
-    btc = btc - (btc * Decimal(0.01))
+    btc = btc - (btc * Decimal(0.002))
     btc = (((sell_coin * btc) / 100) - 1) * 100
     text = f"{fiat.upper()}-{coin2.upper()}-{coin.upper()}-{fiat.upper()}" \
            f"\nMаржа: {btc:.3f} %\nбанк: {bank}\nМин.сумма: {limit}"
