@@ -5,8 +5,12 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher import FSMContext
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from exchanges import binance_get_p2p_scheme, huobi_get_p2p_scheme
+from dotenv import load_dotenv
+import os
 
-bot = Bot(token='6387405385:AAGuXiv3YixYDhEia8b1ejSGMpejso-tuS4')
+load_dotenv()
+
+bot = Bot(token=os.getenv('TOKEN'))
 storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
 
@@ -36,7 +40,6 @@ async def give_limit_binance(message: types.Message):
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
     keyboard.add('10000', '20000', '5000', 'Назад')
     await bot.send_message(message.chat.id, 'Выберите или напишите лимит:', reply_markup=keyboard)
-
 
 
 async def show_binance_button(message: types.Message):
